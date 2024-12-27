@@ -46,7 +46,7 @@ entry = {
     "checksum": md5(open(f"release/javmetadata_{version}.zip", "rb").read()).hexdigest(),
     "changelog": "",
     "targetAbi": f"{targetAbi}.0",
-    "sourceUrl": f"https://github.com/sleepmuffin/JavMetadata/releases/download/{version}/javmetadata_{version}.zip",
+    "sourceUrl": f"https://github.com/sleepmuffin/JavMetadata/releases/download/v{version}/javmetadata_{version}.zip",
     "timestamp": timestamp,
     "version": version
 }
