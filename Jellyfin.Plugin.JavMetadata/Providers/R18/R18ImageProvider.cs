@@ -28,7 +28,7 @@ public class R18ImageProvider : IRemoteImageProvider, IHasOrder
     /// <inheritdoc />
     public async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancelToken)
     {
-        _logger.LogInformation("[R18] Starting Image Provider");
+        _logger.LogInformation("[R18] Starting Image Provider for {item}", item.ExternalId);
         var id = item.GetProviderId("R18");
         if (string.IsNullOrEmpty(id)) return Array.Empty<RemoteImageInfo>();
         _logger.LogInformation("[R18] Getting images for {id}", id);

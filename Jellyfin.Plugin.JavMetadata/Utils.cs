@@ -36,7 +36,8 @@ public class Utils
 
         result.Item.ProductionYear = date.Year;
         result.Item.PremiereDate = date;
-        result.Item.ProviderIds = new Dictionary<string, string> { { "R18Dev", data.content_id } };
+        result.Item.ProviderIds = new Dictionary<string, string> { { "R18", data.content_id } };
+        result.Item.ExternalId = data.content_id;
         data.actresses.ForEach(actress => { result.AddPerson(CreatePerson(actress)); });
 
         return result;
@@ -51,7 +52,7 @@ public class Utils
             ImageUrl = string.Format(Constants.ImageUrl, actress.image_url),
             ProviderIds = new Dictionary<string, string>
             {
-                { "R18Dev", actress.id.ToString() }
+                { "R18", actress.id.ToString() }
             }
         };
     }
