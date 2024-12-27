@@ -71,7 +71,6 @@ public class R18ImageProvider : IRemoteImageProvider, IHasOrder
         {
             await Utils.CropThumb(httpResponse).ConfigureAwait(false);
         }
-        imageStream.Close();
         return httpResponse;
     }
 
