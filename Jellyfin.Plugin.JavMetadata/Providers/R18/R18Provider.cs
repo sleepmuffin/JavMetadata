@@ -1,24 +1,17 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Jellyfin.Plugin.JavMetadata.Providers.R18Dev;
-using MediaBrowser.Controller.Configuration;
-using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Providers;
-using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Providers;
 using Microsoft.Extensions.Logging;
 
 namespace Jellyfin.Plugin.JavMetadata.Providers.R18;
 
-public class R18Provider<B, T, E> : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
-    where T : BaseItem, IHasLookupInfo<E>
-    where E : ItemLookupInfo, new()
+public class R18Provider : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
 {
-    protected readonly IServerConfigurationManager _config;
-    protected readonly IFileSystem _fileSystem;
     protected readonly IHttpClientFactory _httpClientFactory;
-    protected readonly ILogger<B> _logger;
+    protected readonly ILogger<R18Provider> _logger;
     
     /// <inheritdoc />
     public int Order => 99;
@@ -26,20 +19,16 @@ public class R18Provider<B, T, E> : IRemoteMetadataProvider<Movie, MovieInfo>, I
     /// <inheritdoc />
     public string Name => "R18";
 
-    public R18Provider(IFileSystem fileSystem,
-        IHttpClientFactory httpClientFactory,
-        ILogger<B> logger,
-        IServerConfigurationManager config
-    )
+    /// <summary>Initializes a new instance of the <see cref="R18Provider"/> class.</summary>
+    /// <param name="httpClientFactory">Instance of the <see cref="IHttpClientFactory" />.</param>
+    /// <param name="logger">Instance of the <see cref="ILogger" />.</param>
+    public R18Provider(IHttpClientFactory httpClientFactory, ILogger<R18Provider> logger)
     {
-        _config = config;
-        _fileSystem = fileSystem;
         _httpClientFactory = httpClientFactory;
         _logger = logger;
     }
-
-    // public string Name => Constants.PluginName;
-
+    
+    /// <inheritdoc />
     public virtual async Task<MetadataResult<Movie>> GetMetadata(MovieInfo info, CancellationToken cancellationToken)
     {
         _logger.LogDebug("R18 GetMetadata: {Path}", info.Path);
@@ -75,12 +64,14 @@ public class R18Provider<B, T, E> : IRemoteMetadataProvider<Movie, MovieInfo>, I
         return GetMetadataImpl(movieData);
     }
 
+    /// <inheritdoc />
     public Task<IEnumerable<RemoteSearchResult>> GetSearchResults(MovieInfo searchInfo,
         CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc />
     public virtual Task<HttpResponseMessage> GetImageResponse(string url, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
