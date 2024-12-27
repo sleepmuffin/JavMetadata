@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Jellyfin.Plugin.JavMetadata.Providers.R18;
 
-public class R18RemoteProvider<B, T, E> : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
+public class R18Provider<B, T, E> : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
     where T : BaseItem, IHasLookupInfo<E>
     where E : ItemLookupInfo, new()
 {
@@ -26,7 +26,7 @@ public class R18RemoteProvider<B, T, E> : IRemoteMetadataProvider<Movie, MovieIn
     /// <inheritdoc />
     public string Name => "R18";
 
-    public R18RemoteProvider(IFileSystem fileSystem,
+    public R18Provider(IFileSystem fileSystem,
         IHttpClientFactory httpClientFactory,
         ILogger<B> logger,
         IServerConfigurationManager config
