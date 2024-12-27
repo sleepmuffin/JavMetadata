@@ -5,23 +5,25 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>Jellyfin.Plugin.JavMetadata</RootNamespace>
-        <AssemblyVersion>1.0.0.21</AssemblyVersion>
-        <FileVersion>1.0.0.21</FileVersion>
+        <AssemblyVersion>1.0.0.22</AssemblyVersion>
+        <FileVersion>1.0.0.22</FileVersion>
         <Version>1.0.0.0</Version>
         <Configurations>Debug;Release;</Configurations>
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Configuration\configPage.html"/>
+        <None Remove="Configuration\configPage.html" />
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Include="Configuration\configPage.html"/>
+        <EmbeddedResource Include="Configuration\configPage.html" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Jellyfin.Controller" Version="10.10.3"/>
-        <PackageReference Include="Jellyfin.Model" Version="10.10.3"/>
+        <PackageReference Include="Jellyfin.Controller" Version="10.10.3" />
+        <PackageReference Include="Jellyfin.Model" Version="10.10.3" />
+        <PackageReference Include="Jellyfin.Model" Version="10.10.3" />
+        <PackageReference Include="SkiaSharp" Version="3.116.1" />
     </ItemGroup>
 
 </Project>

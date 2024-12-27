@@ -3,6 +3,7 @@ using Jellyfin.Plugin.JavMetadata.Providers.R18Dev;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Providers;
+using SkiaSharp;
 
 namespace Jellyfin.Plugin.JavMetadata;
 
@@ -55,5 +56,26 @@ public class Utils
                 { "R18", actress.id.ToString() }
             }
         };
+    }
+    
+    /// <summary>Crops a full size dvd cover into just the front cover image. Copied from JellyfinJav</summary>
+    /// <param name="httpResponse">The full size dvd cover's http response.</param>
+    /// <returns>An empty task when the job is done.</returns>
+    public static async Task CropThumb(HttpResponseMessage httpResponse)
+    {
+        using var imageStream = await httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
+        using var imageBitmap = SKBitmap.Decode(imageStream);
+
+        SKBitmap subset = new SKBitmap();
+        imageBitmap.ExtractSubset(subset, SKRectI.Create(421, 0, 379, 538));
+
+        // I think there will be a memory leak if I use MemoryStore.
+        var finalStream = File.Open(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".jpg"), FileMode.OpenOrCreate);
+        subset.Encode(finalStream, SKEncodedImageFormat.Jpeg, 100);
+        finalStream.Seek(0, 0);
+
+        var newContent = new StreamContent(finalStream);
+        newContent.Headers.ContentType = httpResponse.Content.Headers.ContentType;
+        httpResponse.Content = newContent;
     }
 }

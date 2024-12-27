@@ -64,7 +64,7 @@ public class R18ImageProvider : IRemoteImageProvider, IHasOrder
     public async Task<HttpResponseMessage> GetImageResponse(string url, CancellationToken cancelToken)
     {
         var httpResponse = await HttpClient.GetAsync(url, cancelToken).ConfigureAwait(false);
-        // await Utility.CropThumb(httpResponse).ConfigureAwait(false);
+        await Utils.CropThumb(httpResponse).ConfigureAwait(false);
         return httpResponse;
     }
 
