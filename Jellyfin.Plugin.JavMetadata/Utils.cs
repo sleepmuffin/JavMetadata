@@ -71,7 +71,7 @@ public class Utils
         {
             imageBitmap.ExtractSubset(subset, SKRectI.Create(421, 0, 379, 538));
         }
-        
+
         // I think there will be a memory leak if I use MemoryStore.
         var finalStream = File.Open(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".jpg"), FileMode.OpenOrCreate);
         subset.Encode(finalStream, SKEncodedImageFormat.Jpeg, 100);
