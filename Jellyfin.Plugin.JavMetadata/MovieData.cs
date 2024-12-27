@@ -24,7 +24,7 @@ public class MovieData
     public short runtime_mins { get; set; }
     public string sample_url { get; set; }
     public int series_id { get; set; }
-    public int series_name_en { get; set; }
+    public string series_name_en { get; set; }
     public bool series_name_en_is_machine_translation { get; set; }
     public string series_name_ja { get; set; }
     public string service_code { get; set; }

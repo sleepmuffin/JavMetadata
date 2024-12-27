@@ -36,7 +36,7 @@ public class Utils
 
         result.Item.ProductionYear = date.Year;
         result.Item.PremiereDate = date;
-        result.Item.ProviderIds = new Dictionary<string, string> { { "R18Dev", data.dvd_id } };
+        result.Item.ProviderIds = new Dictionary<string, string> { { "R18Dev", data.content_id } };
         data.actresses.ForEach(actress => { result.AddPerson(CreatePerson(actress)); });
 
         return result;
