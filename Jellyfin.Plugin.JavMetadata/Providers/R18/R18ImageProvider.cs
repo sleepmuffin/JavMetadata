@@ -10,13 +10,13 @@ namespace Jellyfin.Plugin.JavMetadata.Providers.R18;
 public class R18ImageProvider : IRemoteImageProvider, IHasOrder
 {
     private static readonly HttpClient HttpClient = new();
-    private readonly ILogger<R18Provider> logger;
+    private readonly ILogger<R18ImageProvider> _logger;
 
     /// <summary>Initializes a new instance of the <see cref="R18ImageProvider" /> class.</summary>
-    public R18ImageProvider(ILogger<R18Provider> logger)
+    public R18ImageProvider(ILogger<R18ImageProvider> logger)
     {
         HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0");
-        logger = logger;
+        this._logger = logger;
     }
 
     /// <inheritdoc />
@@ -28,10 +28,10 @@ public class R18ImageProvider : IRemoteImageProvider, IHasOrder
     /// <inheritdoc />
     public async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancelToken)
     {
-        logger.LogInformation("[R18] Starting Image Provider");
+        _logger.LogInformation("[R18] Starting Image Provider");
         var id = item.GetProviderId("R18");
         if (string.IsNullOrEmpty(id)) return Array.Empty<RemoteImageInfo>();
-        logger.LogInformation("[R18] Getting images for {id}", id);
+        _logger.LogInformation("[R18] Getting images for {id}", id);
 
         var primaryImageFormats = new[]
         {
@@ -95,6 +95,7 @@ public class R18ImageProvider : IRemoteImageProvider, IHasOrder
             }
             catch (HttpRequestException)
             {
+                _logger.LogInformation("[R18] Image URL could not be retrieved");
                 // Ignore HttpRequestException and try the next URL
             }
             catch (OperationCanceledException)
@@ -104,11 +105,13 @@ public class R18ImageProvider : IRemoteImageProvider, IHasOrder
             }
             catch (Exception)
             {
+                _logger.LogInformation("[R18] Image URL could not be retrieved");
                 // Ignore other exceptions and try the next URL
             }
         }
 
         // If no valid image URL is found, return null
+        _logger.LogInformation("[R18] Image URL is null");
         return null;
     }
 }
