@@ -74,9 +74,10 @@ public class R18Provider : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
     }
 
     /// <inheritdoc />
-    public virtual Task<HttpResponseMessage> GetImageResponse(string url, CancellationToken cancellationToken)
+    public async Task<HttpResponseMessage> GetImageResponse(string url, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var client = _httpClientFactory.CreateClient(Constants.PluginName);
+        return await client.GetAsync(url, cancellationToken).ConfigureAwait(false);
     }
 
     internal MetadataResult<Movie> GetMetadataImpl(MovieData movieData)

@@ -3,17 +3,20 @@ using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Providers;
+using Microsoft.Extensions.Logging;
 
 namespace Jellyfin.Plugin.JavMetadata.Providers.R18;
 
 public class R18ImageProvider : IRemoteImageProvider, IHasOrder
 {
     private static readonly HttpClient HttpClient = new();
+    private readonly ILogger<R18Provider> logger;
 
     /// <summary>Initializes a new instance of the <see cref="R18ImageProvider" /> class.</summary>
-    public R18ImageProvider()
+    public R18ImageProvider(ILogger<R18Provider> logger)
     {
         HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0");
+        logger = logger;
     }
 
     /// <inheritdoc />
@@ -25,8 +28,10 @@ public class R18ImageProvider : IRemoteImageProvider, IHasOrder
     /// <inheritdoc />
     public async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancelToken)
     {
+        logger.LogInformation("[R18] Starting Image Provider");
         var id = item.GetProviderId("R18");
         if (string.IsNullOrEmpty(id)) return Array.Empty<RemoteImageInfo>();
+        logger.LogInformation("[R18] Getting images for {id}", id);
 
         var primaryImageFormats = new[]
         {
