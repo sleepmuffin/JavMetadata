@@ -31,7 +31,7 @@ public class R18Provider : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
     /// <inheritdoc />
     public virtual async Task<MetadataResult<Movie>> GetMetadata(MovieInfo info, CancellationToken cancellationToken)
     {
-        _logger.LogDebug("R18 GetMetadata: {Path}", info.Path);
+        _logger.LogInformation("R18 GetMetadata: {Path}", info.Path);
         MetadataResult<Movie> result = new();
         var id = GetJavCode(info.Path);
         if (string.IsNullOrWhiteSpace(id))
@@ -41,7 +41,7 @@ public class R18Provider : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
             return result;
         }
 
-        _logger.LogDebug("R18 GetMetadata: Calling Metadata function: {ID}", id);
+        _logger.LogInformation("R18 GetMetadata: Calling Metadata function: {ID}", id);
         var client = _httpClientFactory.CreateClient(Constants.PluginName);
         var response = await client.GetAsync(string.Format(Constants.SearchQuery, id), cancellationToken);
         if (!response.IsSuccessStatusCode)
@@ -53,11 +53,13 @@ public class R18Provider : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
 
         response.EnsureSuccessStatusCode();
         var json = await response.Content.ReadAsStringAsync();
+        _logger.LogInformation("Deserializing first call: {json}", json);
         var search = JsonSerializer.Deserialize<SearchQueryData>(json);
 
         var movieResponse =
             await client.GetAsync(string.Format(Constants.VideoUrl, search.content_id), cancellationToken);
         var movieJson = await movieResponse.Content.ReadAsStringAsync();
+        _logger.LogInformation("Deserializing second call: {movieJson}", movieJson);
         var movieData = JsonSerializer.Deserialize<MovieData>(movieJson);
 
 
