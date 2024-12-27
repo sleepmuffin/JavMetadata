@@ -4,14 +4,14 @@ using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Providers;
 
-namespace Jellyfin.Plugin.JavMetadata.Providers.R18Dev;
+namespace Jellyfin.Plugin.JavMetadata.Providers.R18;
 
-public class R18DevImageProvider : IRemoteImageProvider, IHasOrder
+public class R18ImageProvider : IRemoteImageProvider, IHasOrder
 {
     private static readonly HttpClient HttpClient = new();
 
-    /// <summary>Initializes a new instance of the <see cref="R18DevImageProvider" /> class.</summary>
-    public R18DevImageProvider()
+    /// <summary>Initializes a new instance of the <see cref="R18ImageProvider" /> class.</summary>
+    public R18ImageProvider()
     {
         HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0");
     }
@@ -20,12 +20,12 @@ public class R18DevImageProvider : IRemoteImageProvider, IHasOrder
     public int Order => 99;
 
     /// <inheritdoc />
-    public string Name => "R18Dev";
+    public string Name => "R18";
 
     /// <inheritdoc />
     public async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancelToken)
     {
-        var id = item.GetProviderId("R18Dev");
+        var id = item.GetProviderId("R18");
         if (string.IsNullOrEmpty(id)) return Array.Empty<RemoteImageInfo>();
 
         var primaryImageFormats = new[]

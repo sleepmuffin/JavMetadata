@@ -3,15 +3,15 @@ using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Providers;
 
-namespace Jellyfin.Plugin.JavMetadata.Providers.R18Dev;
+namespace Jellyfin.Plugin.JavMetadata.Providers.R18;
 
-public class R18DevExternalId : IExternalId
+public class R18ExternalId : IExternalId
 {
     /// <inheritdoc />
-    public string ProviderName => "R18Dev";
+    public string ProviderName => "R18";
 
     /// <inheritdoc />
-    public string Key => "R18Dev";
+    public string Key => "R18";
 
     /// <inheritdoc />
     public string UrlFormatString => "https://r18.dev/videos/vod/movies/detail/-/id={0}/";

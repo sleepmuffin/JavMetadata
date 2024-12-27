@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Jellyfin.Plugin.JavMetadata.Providers.R18Dev;
 using MediaBrowser.Controller.Configuration;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
@@ -8,9 +9,9 @@ using MediaBrowser.Model.IO;
 using MediaBrowser.Model.Providers;
 using Microsoft.Extensions.Logging;
 
-namespace Jellyfin.Plugin.JavMetadata.Providers.R18Dev;
+namespace Jellyfin.Plugin.JavMetadata.Providers.R18;
 
-public class R18DevRemoteProvider<B, T, E> : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
+public class R18RemoteProvider<B, T, E> : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
     where T : BaseItem, IHasLookupInfo<E>
     where E : ItemLookupInfo, new()
 {
@@ -23,9 +24,9 @@ public class R18DevRemoteProvider<B, T, E> : IRemoteMetadataProvider<Movie, Movi
     public int Order => 99;
 
     /// <inheritdoc />
-    public string Name => "R18Dev";
+    public string Name => "R18";
 
-    public R18DevRemoteProvider(IFileSystem fileSystem,
+    public R18RemoteProvider(IFileSystem fileSystem,
         IHttpClientFactory httpClientFactory,
         ILogger<B> logger,
         IServerConfigurationManager config
