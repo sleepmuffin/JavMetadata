@@ -45,6 +45,4 @@ public class SearchQueryData
     public short runtime_minutes { get; set; }
     public Sample sample { get; set; }
     public Series series { get; set; }
-    public List<string> actresses { get; set; }
-    public List<string> categories { get; set; }
 }
