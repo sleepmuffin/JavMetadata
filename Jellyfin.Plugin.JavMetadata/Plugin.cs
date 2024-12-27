@@ -38,7 +38,7 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
     }
 
     public override string Name => Constants.PluginName;
-    public override Guid Id => Guid.NewGuid();
+    public override Guid Id => Guid.Parse(Constants.PluginGuid);
 
     /// <summary>
     ///     Gets the current plugin instance.
