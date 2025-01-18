@@ -65,12 +65,7 @@ public class R18ImageProvider : IRemoteImageProvider, IHasOrder
     public async Task<HttpResponseMessage> GetImageResponse(string url, CancellationToken cancelToken)
     {
         var httpResponse = await HttpClient.GetAsync(url, cancelToken).ConfigureAwait(false);
-        using var imageStream = await httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
-        using var imageBitmap = SKBitmap.Decode(imageStream);
-        if (imageBitmap.Width > 600)
-        {
-            await Utils.CropThumb(httpResponse).ConfigureAwait(false);
-        }
+        await Utils.CropThumb(httpResponse).ConfigureAwait(false);
         return httpResponse;
     }
 

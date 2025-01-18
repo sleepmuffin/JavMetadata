@@ -67,10 +67,7 @@ public class Utils
         using var imageBitmap = SKBitmap.Decode(imageStream);
 
         SKBitmap subset = new SKBitmap();
-        if (imageBitmap.Width > 600)
-        {
-            imageBitmap.ExtractSubset(subset, SKRectI.Create(421, 0, 379, 538));
-        }
+        imageBitmap.ExtractSubset(subset, SKRectI.Create(421, 0, 379, 538));
 
         // I think there will be a memory leak if I use MemoryStore.
         var finalStream = File.Open(Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".jpg"), FileMode.OpenOrCreate);
