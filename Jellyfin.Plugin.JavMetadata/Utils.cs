@@ -18,7 +18,7 @@ public class Utils
             Item = item
         };
 
-        result.Item.Name = data.title_en;
+        result.Item.Name = $"[{data.dvd_id}] {data.title_en}";
         result.Item.Genres = data.categories
             .FindAll(categoriesData => !categoriesData.name_en_is_machine_translation)
             .ConvertAll(categoriesData => categoriesData.name_en)
