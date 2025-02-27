@@ -47,6 +47,7 @@ public class R18Provider : IRemoteMetadataProvider<Movie, MovieInfo>, IHasOrder
         if (!response.IsSuccessStatusCode)
         {
             _logger.LogInformation("R18 GetMetadata: Error calling Metadata function: {ID}", id);
+            _logger.LogInformation("R18 GetMetadata Response: {response}", response);
             result.HasMetadata = false;
             return result;
         }

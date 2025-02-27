@@ -8,6 +8,14 @@
         "overview": "JAV metadata for Jellyfin.",
         "versions": [
             {
+                "checksum": "405bade7e44203b224621266da8bf9ca",
+                "changelog": "",
+                "targetAbi": "10.10.2.0",
+                "sourceUrl": "https://github.com/sleepmuffin/JavMetadata/releases/download/v1.0.1.7/javmetadata_1.0.1.7.zip",
+                "timestamp": "2025-02-27T13:24:21Z",
+                "version": "1.0.1.7"
+            },
+            {
                 "checksum": "3d592f074a6d44391540b55ba40bd93b",
                 "changelog": "",
                 "targetAbi": "10.10.2.0",
