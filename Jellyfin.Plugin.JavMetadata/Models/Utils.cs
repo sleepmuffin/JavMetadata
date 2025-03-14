@@ -34,7 +34,7 @@ public class Utils
 
         result.Item.ProductionYear = date.Year;
         result.Item.PremiereDate = date;
-        result.Item.ProviderIds = new Dictionary<string, string> { { "MetadataServe", data.dvdId } };
+        result.Item.ProviderIds = new Dictionary<string, string> { { "MetadataServe", data.dvdId }, { "MetadataServeImageProvider", data.contentId } };
         result.Item.ExternalId = data.dvdId;
         result.Item.OriginalTitle = data.titleJa;
         data.actresses.ForEach(actress => { result.AddPerson(CreatePerson(actress, PersonKind.Actor)); });

@@ -27,7 +27,7 @@ public class MetadataServeImageProvider : IRemoteImageProvider, IHasOrder
     public async Task<IEnumerable<RemoteImageInfo>> GetImages(BaseItem item, CancellationToken cancelToken)
     {
         _logger.LogInformation("[MetadataServe] Starting Image Provider for {item}", item.ExternalId);
-        var id = item.GetProviderId("MetadataServe");
+        var id = item.GetProviderId("MetadataServeImageProvider");
         if (string.IsNullOrEmpty(id)) return Array.Empty<RemoteImageInfo>();
         _logger.LogInformation("[MetadataServe] Getting images for {id}", id);
 
