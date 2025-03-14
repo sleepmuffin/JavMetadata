@@ -48,18 +48,29 @@ public class Utils
 
     private static PersonInfo CreatePerson(ActressData actress, PersonKind personKind)
     {
-        var fileName= actress.imageUrl;
-        if (fileName != null)
+        string? actressName = null;
+        if (actress.imageUrl != null)
         {
-            int fileExtPos = fileName.LastIndexOf(".");
-            if (fileExtPos >= 0 )
-                fileName= fileName.Substring(0, fileExtPos);
+            Uri uri = new Uri(actress.imageUrl);
+            actressName = uri.Segments.LastOrDefault();
+        }
+        
+        if (actressName != null)
+        {
+            int fileExtPos = actressName.LastIndexOf(".");
+            if (fileExtPos >= 0)
+                actressName =
+                    System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(
+                        actressName
+                            .Substring(0, fileExtPos)
+                            .Replace("_", " ")
+                    );
         }
         return new PersonInfo
         {
-            Name = actress.nameRomaji ?? fileName,
+            Name = actress.nameRomaji ?? actressName ?? actress.nameKanji,
             Type = personKind,
-            ImageUrl = string.Format(Constants.ImageUrl, actress.imageUrl),
+            ImageUrl = actress.imageUrl,
             ProviderIds = new Dictionary<string, string>
             {
                 { "MetadataServe", actress.id.ToString() }
