@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Jellyfin.Plugin.JavMetadata.Models;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Providers;
+using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.Providers;
 using Microsoft.Extensions.Logging;
 
@@ -33,7 +34,8 @@ public class MetadataServeProvider : IRemoteMetadataProvider<Movie, MovieInfo>, 
     {
         _logger.LogInformation("MetadataServe GetMetadata: {Path}", info.Path);
         MetadataResult<Movie> result = new();
-        var id = GetJavCode(info.Path);
+        var externalId = info.GetProviderId("MetadataServe");
+        var id = externalId ?? GetJavCode(info.Path);
         if (string.IsNullOrWhiteSpace(id))
         {
             _logger.LogInformation("MetadataServe GetMetadata: JAV Code not found in filename of title: {Name}", info.Name);
