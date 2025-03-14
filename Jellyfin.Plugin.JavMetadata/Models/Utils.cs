@@ -34,19 +34,31 @@ public class Utils
 
         result.Item.ProductionYear = date.Year;
         result.Item.PremiereDate = date;
-        result.Item.ProviderIds = new Dictionary<string, string> { { "MetadataServe", data.contentId } };
-        result.Item.ExternalId = data.contentId;
-        data.actresses.ForEach(actress => { result.AddPerson(CreatePerson(actress)); });
+        result.Item.ProviderIds = new Dictionary<string, string> { { "MetadataServe", data.dvdId } };
+        result.Item.ExternalId = data.dvdId;
+        result.Item.OriginalTitle = data.titleJa;
+        data.actresses.ForEach(actress => { result.AddPerson(CreatePerson(actress, PersonKind.Actor)); });
 
+        // todo add tags for series
+        // result.Item.Tags = data.tags
+        // result.AddPerson();
+        // Type = PersonKind.Director,
         return result;
     }
 
-    private static PersonInfo CreatePerson(ActressData actress)
+    private static PersonInfo CreatePerson(ActressData actress, PersonKind personKind)
     {
+        var fileName= actress.imageUrl;
+        if (fileName != null)
+        {
+            int fileExtPos = fileName.LastIndexOf(".");
+            if (fileExtPos >= 0 )
+                fileName= fileName.Substring(0, fileExtPos);
+        }
         return new PersonInfo
         {
-            Name = actress.nameRomaji ?? actress.nameKanji,
-            Type = PersonKind.Actor,
+            Name = actress.nameRomaji ?? fileName,
+            Type = personKind,
             ImageUrl = string.Format(Constants.ImageUrl, actress.imageUrl),
             ProviderIds = new Dictionary<string, string>
             {

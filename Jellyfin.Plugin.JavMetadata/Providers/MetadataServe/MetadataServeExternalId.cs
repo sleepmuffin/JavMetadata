@@ -14,7 +14,7 @@ public class MetadataServeExternalId : IExternalId
     public string Key => "MetadataServe";
 
     /// <inheritdoc />
-    public string UrlFormatString => "http://localhost:8456/videos/{0}";
+    public string UrlFormatString => "http://192.168.0.100:8456/videos/{0}";
 
     /// <inheritdoc />
     public ExternalIdMediaType? Type => ExternalIdMediaType.Movie;
