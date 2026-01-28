@@ -11,6 +11,7 @@ public class MetadataServeMovieData
     public string? releaseDate { get; set; }
     public string? titleEn { get; set; }
     public string? titleJa { get; set; }
+    public string? seriesName { get; set; }
 }
 
 public class CategoriesData
