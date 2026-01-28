@@ -40,7 +40,7 @@ public class Utils
         data.actresses.ForEach(actress => { result.AddPerson(CreatePerson(actress, PersonKind.Actor)); });
         List<string?> itemTags = result.Item.Tags.Select(x => x?.Trim()).ToList();
         itemTags.Add(data.seriesName);
-        result.Item.Tags = itemTags.Distinct().ToArray();
+        result.Item.Tags = itemTags.Distinct().Where(tag => tag is not null).ToArray();
 
         // todo add tags for series
         // result.Item.Tags = data.tags
